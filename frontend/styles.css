@@ -1,0 +1,194 @@
+/* General page styling */
+html, body{
+    margin: 0;
+    padding: 0;
+    height: 100%;
+  
+}
+/* index page background */
+.index-page{
+    background: linear-gradient(to bottom, #ced6de, #e0a0a0);
+   
+}
+/* chat page background */
+.chat-page{
+    background:  linear-gradient(#ced6de, #e0a0a0);
+    /* background:  linear-gradient( #15395d, #c94e73); */
+}
+/* header style */
+header{
+    /* we can change the background color of header part */
+    background-color: #2C3E50;
+    /* DARK NAVY BLUE */
+    /* here we can change the color of the text of header */
+    color: #D4AF37;
+    padding: -220%;
+    text-align: center;
+}
+
+/* Flex box for positioning */
+.header-container{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    /* space between icons and text */
+    gap: 15px; 
+}
+
+/* Round icon teacer and student */
+.header-icon{
+    width: 90px;
+    height: 70px;
+    border-radius: 60px;
+    object-fit: cover;
+    /* here we can change the color of the icons border */
+    border: 2px solid white;
+}
+/* landing container places(image and text) */
+.landing-container{
+    display: flex;
+    align-items: flex-end;
+    position: relative;
+    gap: 5px;
+    cursor: pointer;
+    margin-top: 120px; 
+
+img{
+    background-color: transparent;
+    mix-blend-mode: multiply;
+
+}
+}
+/* Welcome Section (text and image) part */
+.welcome-section{
+    font-size: 50px; 
+    font-weight: bold;
+    font-family: "Arial", sans-serif;
+    /* here we can change text(welcome, this is seetu) color */
+    background:  linear-gradient(to right, #2c5884, #b75868);
+    /* adjust colors */
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    position: relative;
+    bottom: 40px;
+    top: -10;
+    left: 10px;
+}
+.chatbot-image{
+    float: left;
+    width: 450px;
+    height: 380px;
+    margin-left: 200px;
+    object-fit: cover;
+    position: relative;
+    top: -10px;
+}
+/* size,color for text */
+.welcome-section h2 {
+    font-size: 208px;
+    font-weight: bold;
+    font-family: Arial, sans-serif;
+    /* color: rgb(12, 56, 79); */
+    position: absolute;
+    left: 240px;
+    bottom: 10px;
+}
+/* chat page */
+/* chat container */
+.chat-container{
+    width: 90%;
+    max-width: 500px;
+    margin: 20px auto;
+    padding: 10px;
+    /* here we can change the chat box or chat container color */
+    background: #93989e;
+    border-radius: 15px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    position: relative;
+
+}
+/* chat messages place */
+/* chat box */
+/* no need to change */
+.chat-box{
+    height: 520px;
+    max-height: 700px;
+    overflow-y: auto;
+    padding: 10px;
+    /* border of chatbox */
+    border: 2px solid #bec4cc;
+    border-radius: 11px;
+    background-color: #afb3b5;
+}
+.message{
+    background-color: #A7ECEE;
+    /* light cyan */
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+    opacity: 0;
+    animation: fadeIn 0.5s forwards;
+}
+.user-message{
+    justify-content: flex-end;
+}
+.bot-message img, .user-message img{
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    margin-right: 10px;
+}
+
+.user-message img{
+    margin-left: 10px;
+    background-color: #FFDDC1;
+}
+
+/* Input box */
+/* where user write queries */
+.input-container{
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    background-color: #F8F9FA;
+    border-top: 2px solid #95A5A6;
+    /* border-top: 1px solid #ccc; */
+}
+#userInput{
+    flex: 1;
+    padding: 10px;
+   
+    border: 1px solid #ccc;
+    border-top: 2px solid #95A5A6;
+    border-radius: 20px;
+    position: sticky;
+    bottom: 0;
+}
+#senfBtn{
+    background-color: #007B7F ;
+    /* dark cyan */
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 20px;
+    margin-left: 10px;
+    transition: 0.3s;
+}
+/* clear chat button */
+#clearChat{
+    position: absolute;
+    top: 13px;
+    right: 13px;
+    background: rgb(202, 16, 16);
+    color: rgb(255, 253, 253);
+    border-radius: 14px;
+    padding: 5px 10px;
+    cursor: pointer;
+
+}
+/* Animations */
+@keyframes fadeIn{
+    from{opacity: 0;}
+    to{opacity: 1;}
+}
