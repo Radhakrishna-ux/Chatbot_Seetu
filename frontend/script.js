@@ -8,7 +8,7 @@ document.addEventListener("DOMContentLoaded", function () {
             document.body.style.transition = "opacity 0.5s ease-in-out";
             document.body.style.opacity = "0";
             setTimeout(() => {
-                window.location.href = "Chat.html";
+                window.location.href = "/chat.html";
                 // Redirect after fade-out
             }, 500);
         });
