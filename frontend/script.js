@@ -1,117 +1,100 @@
 document.addEventListener("DOMContentLoaded", function () {
-    // Get the landing container that should trigger navigation
-    let navigateElement = document.getElementById("navigateChat");
+    console.log("DOM is loaded");
 
+    const userInput = document.getElementById("userInput");
+    const navigateElement = document.getElementById("navigateChat");
+    const sendBtn = document.getElementById("sendBtn"); //  Fixed ID
+    const chatBox = document.getElementById("chatBox"); //  Fixed ID
+    
+    //  Function to append messages
+    function appendMessage(message, sender) {
+        if (!chatBox) {
+            console.error("Error: chatBox element not found.");
+            return;
+        }
+        
+        const messageDiv = document.createElement("div");
+        messageDiv.classList.add("message", sender);
+        messageDiv.textContent = message;
+        chatBox.appendChild(messageDiv);
+        chatBox.scrollTop = chatBox.scrollHeight;
+    }
+
+    //  Define sendMessage after appendMessage
+    window.sendMessage = function () {
+        if (!userInput) {
+            console.error("Error: userInput element not found.");
+            return;
+        }
+       
+        const userText = userInput.value.trim();
+        if (userText === "") return;
+
+        appendMessage(userText, "student"); // Now it exists
+        console.log("sendMessage() function called with input:", userText);
+
+        //  Send message to FastAPI backend
+        fetch("https://chatbot-2-5b60.onrender.com/chat", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                "Accept": "application/json"
+            },
+            body: JSON.stringify({ message: userText })
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data && data.reply) {
+                appendMessage(data.reply, "teacher");
+            } else {
+                appendMessage("No response from server.", "teacher");
+            }
+        })
+        .catch(error => {
+            console.error("Fetch error:", error);
+            appendMessage("Error connecting to server.", "teacher");
+        });
+
+        //  Clear input field
+        userInput.value = "";
+    };
+
+    //  Navigation transition effect
     if (navigateElement) {
         navigateElement.addEventListener("click", function () {
-            // Apply a fade-out effect before navigating
             document.body.style.transition = "opacity 0.5s ease-in-out";
             document.body.style.opacity = "0";
             setTimeout(() => {
-                window.location.href = "/chat.html";
-                // Redirect after fade-out
+                window.location.href = "chat.html";
             }, 500);
         });
     }
-    // Restore opacity when chat page loads
+
+    //  Restore opacity on page load
     document.body.style.opacity = "1";
-})
-document.addEventListener("DOMContentLoaded", function () {
-    let chatBox = document.getElementById("chatbox");
-    let userInput = document.getElementById("userInput");
-    let sendBtn = document.getElementById("sentBtn");
+
+    //  Add event listener for the send button
     if (sendBtn) {
-        sendBtn.addEventListener("click", function () {
-            sendMessage();
-        });
+        sendBtn.addEventListener("click", sendMessage);
     }
+
+    //  Add event listener for "Enter" key press
     if (userInput) {
         userInput.addEventListener("keypress", function (event) {
             if (event.key === "Enter") {
                 sendMessage();
+       
             }
         });
     }
-
-    function sendMessage() {
-        let userText = userInput.value.trim();
-        if (userText === "")
-           
-            return;
-        // Append student message to chat
-        appendMessage(userText, "student");
-
-        console.log("sendMessage() function called!");
-        
-        
-        console.log("User input:",userText);
-        // send the message to FastAPI backend
-        
-         // Adjust URL based on your backend server
-        fetch("https://chatbot-2-5b60.onrender.com/chat",{
-            method: "POST",
-            // using post instead of GET
-            headers : {
-                "Content-Type": "applicatiin/json",
-                "Accept": "application/json"
-            },
-            body:JSON.stringify({message:userText})
-            // send user input in the request body
-        })
-
-       
-            .then(response => {
-                if(!response.ok){
-                    throw new Error(`HTTP error!Status:${response.status}`);
-                }
-                return response.json();
-            } )
-            .then(data =>{
-                console.log("Received:", data);
-                if(data && data.reply){
-                    appendMessage(data.reply,"teacher");
-                    // display bot reply
-                }else{
-                    appendMessage("No response from server .","teacher");
-                }
-            })
-            .catch(error =>{
-                console.error("Fetch error:",error);
-                appendMessage("Error connecting to server.","teacher");
-            });
-                
-             
-        // Clear input field
-        userInput.value = "";
-    }
-
-    function appendMessage(text, sender) {
-        let messageDiv = document.createElement("div");
-        messageDiv.classList.add("message", sender);
-
-        let img = document.createElement("img");
-        img.src = sender === "student" ? "Student1.png" : "teacher1.png";
-        img.classList.add("chat-icon");
-
-        let textDiv = document.createElement("div");
-        textDiv.classList.add("message-text");
-        // check if text contains a link
-        textDiv.innerHTML = formatMessage(text);
-
-        if (sender === "student") {
-            messageDiv.appendChild(img);
-            messageDiv.appendChild(textDive);
-        } else {
-            messageDiv.appendChild(img);
-            messageDiv.appendChild(textDiv);
-        }
-        chatBox.appendChild(messageDiv);
-        chatBox.scrollTop = chatBox.scrollHeight;
-    }
-    function formatMessage(text){
-        // regular expression to detect URLs
-        let urlRegex= / (https? : \/\/[^\s]+)/g;
-        // replace detected URLs with clickable links
-        return text.replace(urlRegex,'<a href="$1" target="_black">$1</a>');
-    }
 });
+
+
+
+
+
+
+
+
+
+
